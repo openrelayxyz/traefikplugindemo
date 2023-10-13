@@ -1,0 +1,42 @@
+http:
+  routers:
+    loopback:
+      rule: "PathPrefix(`/router`)"
+      middlewares:
+        - my-plugin
+      service: loopback
+    ethChainId:
+      rule: "PathPrefix(`/eth/chainId`)"
+      service: ethChainId
+    ethBlockNumber:
+      rule: "PathPrefix(`/eth/blockNumber`)"
+      service: ethBlockNumber
+    ethGetBlockByNumber:
+      rule: "PathPrefix(`/eth/getBlockByNumber`)"
+      service: ethGetBlockByNumber
+  middlewares:
+    my-plugin:
+      plugin:
+        rpcloopback: {}
+  services:
+    loopback:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+        - url: http://localhost:8000
+    ethChainId:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+        - url: https://$APIKEY.eth.rpc.rivet.cloud/
+        - url: https://$APIKEY.etc.rpc.rivet.cloud/
+    ethBlockNumber:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+        - url: https://$APIKEY.eth.rpc.rivet.cloud/
+    ethGetBlockByNumber:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+        - url: https://$APIKEY.etc.rpc.rivet.cloud/

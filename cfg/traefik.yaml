@@ -1,0 +1,25 @@
+## STATIC CONFIGURATION
+log:
+  level: INFO
+
+api:
+  insecure: true
+  dashboard: true
+
+entryPoints:
+  web:
+    address: ":8000"
+
+
+providers:
+  file:
+    filename: "services.yaml"
+  # plugin:
+  #   rpcrouter: {}
+
+experimental:
+  localPlugins:
+    rpcloopback:
+      moduleName: github.com/traefik/plugindemo
+    # rpcrouter:
+    #   moduleName: github.com/traefik/pluginproviderdemo
