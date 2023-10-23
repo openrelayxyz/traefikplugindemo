@@ -63,6 +63,7 @@ type rpcCall struct {
 }
 
 func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
+	log.Printf("Got request")
 	body, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		log.Printf("Error reading body: %v", err)

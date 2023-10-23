@@ -11,15 +11,34 @@ entryPoints:
     address: ":8000"
 
 
+
 providers:
-  file:
-    filename: "services.yaml"
-  # plugin:
-  #   rpcrouter: {}
+  # file:
+  #   filename: "services.yaml"
+  plugin:
+    rpcrouter:
+      providers:
+        - url: https://$API_KEY.eth.rpc.rivet.cloud/
+          wsurl: wss://$API_KEY.eth.ws.rivet.cloud/
+          methods:
+            - eth_chainId
+            - eth_blockNumber
+            # - eth_getBlockByNumber
+        - url: https://$API_KEY.etc.rpc.rivet.cloud/
+          wsurl: wss://$API_KEY.etc.ws.rivet.cloud/
+          methods:
+            - eth_chainId
+            # - eth_blockNumber
+            - eth_getBlockByNumber
+      methods:
+        - Name: eth_chainId
+        - Name: eth_blockNumber
+        - Name: eth_getBlockByNumber
+
 
 experimental:
   localPlugins:
     rpcloopback:
       moduleName: github.com/traefik/plugindemo
-    # rpcrouter:
-    #   moduleName: github.com/traefik/pluginproviderdemo
+    rpcrouter:
+      moduleName: github.com/traefik/pluginproviderdemo
